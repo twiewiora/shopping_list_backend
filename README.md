@@ -1,3 +1,3 @@
-# shopping_list_backend
+# Shopping list creator
 
 Shopping list app backend in Python
