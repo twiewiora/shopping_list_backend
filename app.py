@@ -21,16 +21,19 @@ parser.add_argument('item')
 
 
 class Item(Resource):
-    def get(self, item_id):
+    @staticmethod
+    def get(item_id):
         abort_if_todo_doesnt_exist(item_id)
         return ITEMS[item_id]
 
-    def delete(self, item_id):
+    @staticmethod
+    def delete(item_id):
         abort_if_todo_doesnt_exist(item_id)
         del ITEMS[item_id]
         return '', 204
 
-    def put(self, item_id):
+    @staticmethod
+    def put(item_id):
         args = parser.parse_args()
         task = {'item': args['item']}
         ITEMS[item_id] = task
