@@ -56,7 +56,3 @@ class ItemList(Resource):
 
 api.add_resource(ItemList, '/items')
 api.add_resource(Item, '/items/<item_id>')
-
-
-if __name__ == '__main__':
-    app.run()
