@@ -5,9 +5,9 @@ app = Flask(__name__)
 api = Api(app)
 
 ITEMS = {
-    '1': {'id': 1, 'name': 'mleko', 'amount': 1, 'wasBought': False},
-    '2': {'id': 2, 'name': 'jajka', 'amount': 10, 'wasBought': False},
-    '3': {'id': 3, 'name': 'bułki', 'amount': 4, 'wasBought': False}
+    '1': {'id': '1', 'name': 'mleko', 'amount': '1', 'wasBought': '0'},
+    '2': {'id': '2', 'name': 'jajka', 'amount': '10', 'wasBought': '0'},
+    '3': {'id': '3', 'name': 'bułki', 'amount': '4', 'wasBought': '0'}
 }
 
 
@@ -35,26 +35,28 @@ class Item(Resource):
         del ITEMS[item_id]
         return '', 204
 
+
+class ItemList(Resource):
+    @staticmethod
+    def get():
+        return list(ITEMS.values())
+
+
+class ItemCreate(Resource):
     @staticmethod
     def post():
         args = parser.parse_args()
         item_id = str(int(max(ITEMS.keys())) + 1)
         item_name = args['name']
-        ITEMS[item_id] = {'id': item_id, 'name': item_name, 'amount': 1, 'wasBought': False}
+        ITEMS[item_id] = {'id': item_id, 'name': item_name, 'amount': 1, 'wasBought': 0}
         return ITEMS.get(item_id), 201
-
-
-class ItemList(Resource):
-    @staticmethod
-    def get():
-        return ITEMS.values()
 
 
 class ItemChangeAmount(Resource):
     @staticmethod
     def put(item_id):
         args = parser.parse_args()
-        item = ITEMS.get(args['id'])
+        item = ITEMS.get(item_id)
         item['amount'] = args['amount']
         return ITEMS.get(item_id), 201
 
@@ -63,12 +65,13 @@ class ItemChangeBuyMark(Resource):
     @staticmethod
     def put(item_id):
         args = parser.parse_args()
-        item = ITEMS.get(args['id'])
+        item = ITEMS.get(item_id)
         item['wasBought'] = args['wasBought']
         return ITEMS.get(item_id), 201
 
 
 api.add_resource(ItemList, '/items')
-api.add_resource(Item, '/item')
+api.add_resource(ItemCreate, '/item')
+api.add_resource(Item, '/item/<item_id>')
 api.add_resource(ItemChangeAmount, '/item/<item_id>/changeAmount')
 api.add_resource(ItemChangeBuyMark, '/item/<item_id>/changeBuyMark')
