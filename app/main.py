@@ -5,26 +5,29 @@ app = Flask(__name__)
 api = Api(app)
 
 ITEMS = {
-    'item1': {'item': 'mleko'},
-    'item2': {'item': 'jajka'},
-    'item3': {'item': 'bułki'},
+    '1': {'id': 1, 'name': 'mleko', 'amount': 1, 'wasBought': False},
+    '2': {'id': 2, 'name': 'jajka', 'amount': 10, 'wasBought': False},
+    '3': {'id': 3, 'name': 'bułki', 'amount': 4, 'wasBought': False}
 }
 
 
-def abort_if_todo_doesnt_exist(todo_id):
-    if todo_id not in ITEMS:
-        abort(404, message="Item {} doesn't exist".format(todo_id))
+def abort_if_todo_doesnt_exist(item_id):
+    if item_id not in ITEMS:
+        abort(404, message="Item {} doesn't exist".format(item_id))
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('item')
+parser.add_argument('id')
+parser.add_argument('name')
+parser.add_argument('amount')
+parser.add_argument('wasBought')
 
 
 class Item(Resource):
     @staticmethod
     def get(item_id):
         abort_if_todo_doesnt_exist(item_id)
-        return ITEMS[item_id]
+        return ITEMS.get(item_id)
 
     @staticmethod
     def delete(item_id):
@@ -33,26 +36,39 @@ class Item(Resource):
         return '', 204
 
     @staticmethod
-    def put(item_id):
+    def post():
         args = parser.parse_args()
-        task = {'item': args['item']}
-        ITEMS[item_id] = task
-        return task, 201
+        item_id = str(int(max(ITEMS.keys())) + 1)
+        item_name = args['name']
+        ITEMS[item_id] = {'id': item_id, 'name': item_name, 'amount': 1, 'wasBought': False}
+        return ITEMS.get(item_id), 201
 
 
 class ItemList(Resource):
     @staticmethod
     def get():
-        return ITEMS
+        return ITEMS.values()
 
+
+class ItemChangeAmount(Resource):
     @staticmethod
-    def post():
+    def put(item_id):
         args = parser.parse_args()
-        item_id = int(max(ITEMS.keys()).lstrip('item')) + 1
-        item_id = 'item%i' % item_id
-        ITEMS[item_id] = {'item': args['item']}
-        return ITEMS[item_id], 201
+        item = ITEMS.get(args['id'])
+        item['amount'] = args['amount']
+        return ITEMS.get(item_id), 201
+
+
+class ItemChangeBuyMark(Resource):
+    @staticmethod
+    def put(item_id):
+        args = parser.parse_args()
+        item = ITEMS.get(args['id'])
+        item['wasBought'] = args['wasBought']
+        return ITEMS.get(item_id), 201
 
 
 api.add_resource(ItemList, '/items')
-api.add_resource(Item, '/items/<item_id>')
+api.add_resource(Item, '/item')
+api.add_resource(ItemChangeAmount, '/item/<item_id>/changeAmount')
+api.add_resource(ItemChangeBuyMark, '/item/<item_id>/changeBuyMark')
