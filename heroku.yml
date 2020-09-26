@@ -1,8 +1,4 @@
 build:
   docker:
-    web:
-      build: Dockerfile
-      ports:
-        - "5000:5000"
-    redis:
-      build: "redis:alpine"
+    web: Dockerfile
+    redis: "redis:alpine"
