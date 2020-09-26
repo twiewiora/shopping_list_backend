@@ -5,9 +5,9 @@ app = Flask(__name__)
 api = Api(app)
 
 ITEMS = {
-    '1': {'id': '1', 'name': 'mleko', 'amount': '1', 'wasBought': '0'},
-    '2': {'id': '2', 'name': 'jajka', 'amount': '10', 'wasBought': '0'},
-    '3': {'id': '3', 'name': 'bułki', 'amount': '4', 'wasBought': '0'}
+    '1': {'id': '1', 'name': 'mleko', 'amount': '1', 'wasBought': 'false'},
+    '2': {'id': '2', 'name': 'jajka', 'amount': '10', 'wasBought': 'false'},
+    '3': {'id': '3', 'name': 'bułki', 'amount': '4', 'wasBought': 'false'}
 }
 
 
@@ -48,7 +48,7 @@ class ItemCreate(Resource):
         args = parser.parse_args()
         item_id = str(int(max(ITEMS.keys())) + 1)
         item_name = args['name']
-        ITEMS[item_id] = {'id': item_id, 'name': item_name, 'amount': 1, 'wasBought': 0}
+        ITEMS[item_id] = {'id': item_id, 'name': item_name, 'amount': '1', 'wasBought': 'false'}
         return ITEMS.get(item_id), 201
 
 
