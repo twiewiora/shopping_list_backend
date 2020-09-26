@@ -1,4 +1,4 @@
 build:
   docker:
     web: Dockerfile
-    redis: "redis:alpine"
+    redis: Dockerfile.redis
