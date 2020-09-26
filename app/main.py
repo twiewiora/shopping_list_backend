@@ -33,7 +33,7 @@ class Item(Resource):
     def delete(item_id):
         abort_if_todo_doesnt_exist(item_id)
         del ITEMS[item_id]
-        return '', 204
+        return {'result': 'deleted'}, 204
 
 
 class ItemList(Resource):
