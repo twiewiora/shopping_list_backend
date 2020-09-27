@@ -6,16 +6,16 @@ from flask_restful import Api, reqparse, abort, Resource
 
 app = Flask(__name__)
 api = Api(app)
-db = redis.Redis(host='redis', port=6379)
+# db = redis.Redis(host='redis', port=6379)
 
-db.set('1', json.dumps({'id': '1', 'name': 'kasza', 'amount': '1', 'wasBought': 'false'}))
-db.set('2', json.dumps({'id': '2', 'name': 'mąka', 'amount': '10', 'wasBought': 'false'}))
-db.set('3', json.dumps({'id': '3', 'name': 'bułki', 'amount': '4', 'wasBought': 'false'}))
+# db.set('1', json.dumps({'id': '1', 'name': 'kasza', 'amount': '1', 'wasBought': 'false'}))
+# db.set('2', json.dumps({'id': '2', 'name': 'mąka', 'amount': '10', 'wasBought': 'false'}))
+# db.set('3', json.dumps({'id': '3', 'name': 'bułki', 'amount': '4', 'wasBought': 'false'}))
 
 
-def abort_if_todo_doesnt_exist(item_id):
-    if not db.exists(item_id):
-        abort(404, message="Item {} doesn't exist".format(item_id))
+# def abort_if_todo_doesnt_exist(item_id):
+    # if not db.exists(item_id):
+    #     abort(404, message="Item {} doesn't exist".format(item_id))
 
 
 parser = reqparse.RequestParser()
@@ -28,8 +28,8 @@ parser.add_argument('wasBought')
 class Item(Resource):
     @staticmethod
     def delete(item_id):
-        abort_if_todo_doesnt_exist(item_id)
-        db.delete(item_id)
+        # abort_if_todo_doesnt_exist(item_id)
+        # db.delete(item_id)
         return {'result': 'deleted'}, 204
 
 
@@ -48,30 +48,30 @@ class ItemCreate(Resource):
     @staticmethod
     def post():
         args = parser.parse_args()
-        item_id = str(int(max(db.keys('*'))) + 1)
-        item_name = args['name']
-        db.set(item_id, json.dumps({'id': item_id, 'name': item_name, 'amount': '1', 'wasBought': 'false'}))
-        return json.loads(db.get(item_id)), 201
+        # item_id = str(int(max(db.keys('*'))) + 1)
+        # item_name = args['name']
+        # db.set(item_id, json.dumps({'id': item_id, 'name': item_name, 'amount': '1', 'wasBought': 'false'}))
+        # return json.loads(db.get(item_id)), 201
 
 
 class ItemChangeAmount(Resource):
     @staticmethod
     def put(item_id):
         args = parser.parse_args()
-        item = json.loads(db.get(item_id))
-        item['amount'] = args['amount']
-        db.set(item_id, json.dumps(item))
-        return json.loads(db.get(item_id)), 201
+        # item = json.loads(db.get(item_id))
+        # item['amount'] = args['amount']
+        # db.set(item_id, json.dumps(item))
+        # return json.loads(db.get(item_id)), 201
 
 
 class ItemChangeBuyMark(Resource):
     @staticmethod
     def put(item_id):
         args = parser.parse_args()
-        item = json.loads(db.get(item_id))
-        item['wasBought'] = args['wasBought']
-        db.set(item_id, json.dumps(item))
-        return json.loads(db.get(item_id)), 201
+        # item = json.loads(db.get(item_id))
+        # item['wasBought'] = args['wasBought']
+        # db.set(item_id, json.dumps(item))
+        # return json.loads(db.get(item_id)), 201
 
 
 api.add_resource(ItemList, '/items')
