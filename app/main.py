@@ -36,11 +36,12 @@ class Item(Resource):
 class ItemList(Resource):
     @staticmethod
     def get():
-        keys = db.keys('*')
-        result = []
-        for key in keys:
-            result.append(json.loads(db.get(key)))
-        return result
+        # keys = db.keys('*')
+        # result = []
+        # for key in keys:
+        #     result.append(json.loads(db.get(key)))
+        # return result
+        return {'test': 'ok'}, 200
 
 
 class ItemCreate(Resource):
