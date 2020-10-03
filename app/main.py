@@ -6,7 +6,7 @@ from flask_restful import Api, reqparse, abort, Resource
 
 app = Flask(__name__)
 api = Api(app)
-db = redis.Redis(host='0.0.0.0', port=6379)
+db = redis.Redis(host='redis', port=6379)
 
 db.set('1', json.dumps({'id': '1', 'name': 'kasza', 'amount': '1', 'wasBought': 'false'}))
 db.set('2', json.dumps({'id': '2', 'name': 'mąka', 'amount': '10', 'wasBought': 'false'}))
