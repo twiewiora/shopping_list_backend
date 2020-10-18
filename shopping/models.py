@@ -1,4 +1,4 @@
-from main import db
+from shopping.main import db
 
 
 class ShoppingItem(db.Model):

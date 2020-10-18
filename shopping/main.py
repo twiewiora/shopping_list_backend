@@ -5,7 +5,7 @@ from flask_restful import Api, reqparse, Resource
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-from models import ShoppingItem
+from shopping.models import ShoppingItem
 
 app = Flask(__name__)
 api = Api(app)
