@@ -36,7 +36,7 @@ class ItemList(Resource):
     def get():
         try:
             items = ShoppingItem.query.all()
-            items.sort(key=lambda item: (item.bought, -item.id), reverse=True)
+            items.sort(key=lambda item: (item.bought, item.id))
             return [item.serialize() for item in items]
         except Exception as e:
             return str(e)
