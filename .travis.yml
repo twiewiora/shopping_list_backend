@@ -3,7 +3,7 @@ jdk: openjdk8
 
 script:
   - cd BehaveTests
-  - mvn surefire:clean verify
+  - mvn surefire:verify
 
 cache:
   directories:
