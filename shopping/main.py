@@ -10,7 +10,7 @@ from shopping.models import ShoppingItem
 app = Flask(__name__)
 api = Api(app)
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object("shopping.config." + os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
