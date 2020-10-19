@@ -1,4 +1,4 @@
-package com.example.bank;
+package com.example.bank.shoppingList;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package com.example.bank;
+package com.example.bank.shoppingList;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
