@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Config {
 
-//    public final static String API = "https://shopping-list-maker.herokuapp.com";
-    public final static String API = "http://localhost:5000";
+    public final static String API = "https://shopping-list-maker.herokuapp.com";
 
 }
