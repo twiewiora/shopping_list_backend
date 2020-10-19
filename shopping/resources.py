@@ -1,7 +1,7 @@
 from flask_restful import Resource
 
 from shopping.main import db, parser
-from shopping.models import ShoppingItem
+from shopping.models import ShoppingItem, Category, Product
 
 
 class Item(Resource):
@@ -65,5 +65,25 @@ class ItemChangeBuyStatus(Resource):
             item.bought = not item.bought
             db.session.commit()
             return item.serialize(), 201
+        except Exception as e:
+            return str(e)
+
+
+class CategoryList(Resource):
+    @staticmethod
+    def get():
+        try:
+            categories = Category.query.all()
+            return [category.serialize() for category in categories]
+        except Exception as e:
+            return str(e)
+
+
+class CategoryProducts(Resource):
+    @staticmethod
+    def get(category_id):
+        try:
+            products = Product.query.filter(Product.category_id == category_id)
+            return [product.serialize() for product in products]
         except Exception as e:
             return str(e)
