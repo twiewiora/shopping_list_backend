@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from shopping.main import db
 
 
@@ -23,4 +25,45 @@ class ShoppingItem(db.Model):
             'name': self.name,
             'amount': self.amount,
             'bought': self.bought
+        }
+
+
+class Category(db.Model):
+    __tablename__ = 'category'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    products = relationship('Product', backref='category')
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
+
+class Product(db.Model):
+    __tablename__ = 'product'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    category_id = db.Column(db.Integer(), db.ForeignKey('category.id'))
+
+    def __init__(self, name, category):
+        self.name = name
+        self.category_id = category.id
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
         }
