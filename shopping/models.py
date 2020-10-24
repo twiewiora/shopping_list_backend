@@ -34,6 +34,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     products = relationship('Product', backref='category')
+    product_list = []
 
     def __init__(self, name):
         self.name = name
@@ -44,7 +45,8 @@ class Category(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'name': self.name
+            'name': self.name,
+            'products': self.product_list
         }
 
 

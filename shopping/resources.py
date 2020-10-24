@@ -74,16 +74,9 @@ class CategoryList(Resource):
     def get():
         try:
             categories = Category.query.all()
+            for category in categories:
+                products = Product.query.filter(Product.category_id == category.id)
+                category.product_list = [product.serialize() for product in products]
             return [category.serialize() for category in categories]
-        except Exception as e:
-            return str(e)
-
-
-class CategoryProducts(Resource):
-    @staticmethod
-    def get(category_id):
-        try:
-            products = Product.query.filter(Product.category_id == category_id)
-            return [product.serialize() for product in products]
         except Exception as e:
             return str(e)

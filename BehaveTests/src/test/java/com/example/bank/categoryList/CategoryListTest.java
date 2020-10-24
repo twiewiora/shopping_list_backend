@@ -21,7 +21,6 @@ public class CategoryListTest {
     @Test
     public void shouldReturnProductListByForGivenCategory() {
         manageCategoryListSteps.whenGetCurrentCategoryList();
-        manageCategoryListSteps.whenGetProductsForCategoryId(1L);
 
         manageCategoryListSteps.thenResultShouldContainsProductsForCategoryId(1L);
     }

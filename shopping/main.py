@@ -17,8 +17,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('name')
 parser.add_argument('amount')
 
-from shopping.resources import ItemList, ItemCreate, Item, ItemChangeAmount, ItemChangeBuyStatus, CategoryList, \
-    CategoryProducts
+from shopping.resources import ItemList, ItemCreate, Item, ItemChangeAmount, ItemChangeBuyStatus, CategoryList
 
 api.add_resource(ItemList, '/items')
 api.add_resource(ItemCreate, '/item')
@@ -26,4 +25,3 @@ api.add_resource(Item, '/item/<item_id>')
 api.add_resource(ItemChangeAmount, '/item/<item_id>/changeAmount')
 api.add_resource(ItemChangeBuyStatus, '/item/<item_id>/changeBuyStatus')
 api.add_resource(CategoryList, '/category/all')
-api.add_resource(CategoryProducts, '/category/<category_id>')
