@@ -35,7 +35,8 @@ class ItemCreate(Resource):
             item = ShoppingItem(
                 name=args['name'],
                 amount=1,
-                bought=False
+                bought=False,
+                user_id=int(args['user_id'])
             )
             db.session.add(item)
             db.session.commit()

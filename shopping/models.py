@@ -10,11 +10,13 @@ class ShoppingItem(db.Model):
     name = db.Column(db.String())
     amount = db.Column(db.Integer())
     bought = db.Column(db.Boolean())
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
-    def __init__(self, name, amount, bought):
+    def __init__(self, name, amount, bought, user_id):
         self.name = name
         self.amount = amount
         self.bought = bought
+        self.user_id = user_id
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -24,7 +26,8 @@ class ShoppingItem(db.Model):
             'id': self.id,
             'name': self.name,
             'amount': self.amount,
-            'bought': self.bought
+            'bought': self.bought,
+            'user_id': self.user_id
         }
 
 
@@ -69,4 +72,27 @@ class Product(db.Model):
             'id': self.id,
             'name': self.name,
             'categoryId': self.category_id
+        }
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String())
+    password = db.Column(db.String())
+    items = relationship('ShoppingItem', backref='user')
+    shopping_list = []
+
+    def __init__(self, login, password):
+        self.login = login
+        self.password = password
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'login': self.login
         }

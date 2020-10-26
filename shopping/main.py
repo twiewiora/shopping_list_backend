@@ -16,6 +16,7 @@ db.init_app(app)
 parser = reqparse.RequestParser()
 parser.add_argument('name')
 parser.add_argument('amount')
+parser.add_argument('user_id')
 
 from shopping.resources import ItemList, ItemCreate, Item, ItemChangeAmount, ItemChangeBuyStatus, CategoryList
 
