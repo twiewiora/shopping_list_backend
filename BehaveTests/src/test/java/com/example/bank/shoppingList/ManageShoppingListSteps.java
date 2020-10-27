@@ -3,6 +3,7 @@ package com.example.bank.shoppingList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingList.ShoppingItem;
+import com.shoppingList.User;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,14 +14,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.shoppingList.Config.API;
-import static net.serenitybdd.rest.SerenityRest.*;
+import static net.serenitybdd.rest.SerenityRest.given;
+import static net.serenitybdd.rest.SerenityRest.then;
 import static org.junit.Assert.*;
 
 public class ManageShoppingListSteps {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    private String userIdn;
+    private Long userId;
     private ShoppingItem shoppingItem;
 
     public void deleteCurrentShoppingItem() {
@@ -33,22 +35,31 @@ public class ManageShoppingListSteps {
     }
 
     @Given(" user identifier: {0}")
-    public void givenUserIdentifier(String userIdn) {
-        this.userIdn = userIdn;
+    public void givenUserIdentifier(String login) {
+        String json = given()
+            .contentType(ContentType.JSON)
+            .get(API + "/user/" + login)
+            .then().statusCode(200).extract().response().asString();
+        try {
+            User user = mapper.readValue(json, User.class);
+            this.userId = user.getId();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @When(" get current shopping list")
     public void whenGetCurrentShoppingList() {
         given()
             .contentType(ContentType.JSON)
-            .get(API + "/items");
+            .get(API + "/items/" + userId);
     }
 
     @When(" create shopping element list with name: {0}")
     public void whenCreateShoppingListElementWithName(String name) {
         String jsonRequest = "";
         try {
-            jsonRequest = mapper.writeValueAsString(ShoppingItem.builder().name(name).build());
+            jsonRequest = mapper.writeValueAsString(ShoppingItem.builder().name(name).userId(userId).build());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -78,7 +89,7 @@ public class ManageShoppingListSteps {
     }
 
     @When(" change product buy status in the shopping list element from: {0}")
-    public void whenChangeProductBuyStatusInTheShoppingListElement(boolean buyStatus) {
+    public void whenChangeProductBuyStatusInTheShoppingListElement() {
         given()
             .contentType(ContentType.JSON)
             .pathParam("itemId", this.shoppingItem.getId())

@@ -5,15 +5,19 @@ import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static com.shoppingList.Config.TEST_USER_LOGIN;
+
 @RunWith(SerenityRunner.class)
 public class ShoppingListTest {
 
     @Steps
     private ManageShoppingListSteps manageShoppingListSteps;
 
+    private final String productName = "testProduct";
+
     @Test
-    public void shouldReturnShoppingListProducts() {
-        manageShoppingListSteps.givenUserIdentifier("test");
+    public void shouldReturnShoppingListProductsForUser() {
+        manageShoppingListSteps.givenUserIdentifier(TEST_USER_LOGIN);
 
         manageShoppingListSteps.whenGetCurrentShoppingList();
 
@@ -22,33 +26,33 @@ public class ShoppingListTest {
 
     @Test
     public void shouldAddProductToShoppingList() {
-        manageShoppingListSteps.givenUserIdentifier("test");
+        manageShoppingListSteps.givenUserIdentifier(TEST_USER_LOGIN);
 
-        manageShoppingListSteps.whenCreateShoppingListElementWithName("test");
+        manageShoppingListSteps.whenCreateShoppingListElementWithName(productName);
         manageShoppingListSteps.whenGetCurrentShoppingList();
 
-        manageShoppingListSteps.thenResultShouldContainsShoppingListElementWithName("test");
+        manageShoppingListSteps.thenResultShouldContainsShoppingListElementWithName(productName);
 
         manageShoppingListSteps.deleteCurrentShoppingItem();
     }
 
     @Test
     public void shouldAddAndRemoveProductFromShoppingList() {
-        manageShoppingListSteps.givenUserIdentifier("test");
+        manageShoppingListSteps.givenUserIdentifier(TEST_USER_LOGIN);
 
-        manageShoppingListSteps.whenCreateShoppingListElementWithName("test");
+        manageShoppingListSteps.whenCreateShoppingListElementWithName(productName);
         manageShoppingListSteps.whenRemoveShoppingListElement();
         manageShoppingListSteps.whenGetCurrentShoppingList();
 
-        manageShoppingListSteps.thenResultShouldNotContainsShoppingListElementWithName("test");
+        manageShoppingListSteps.thenResultShouldNotContainsShoppingListElementWithName(productName);
     }
 
     @Test
     public void shouldChangeProductBuyStatusInTheShoppingList() {
-        manageShoppingListSteps.givenUserIdentifier("test");
+        manageShoppingListSteps.givenUserIdentifier(TEST_USER_LOGIN);
 
-        manageShoppingListSteps.whenCreateShoppingListElementWithName("test");
-        manageShoppingListSteps.whenChangeProductBuyStatusInTheShoppingListElement(false);
+        manageShoppingListSteps.whenCreateShoppingListElementWithName(productName);
+        manageShoppingListSteps.whenChangeProductBuyStatusInTheShoppingListElement();
         manageShoppingListSteps.whenGetCurrentShoppingList();
 
         manageShoppingListSteps.thenResultShouldContainsShoppingListElementWithBuyStatus(true);
@@ -58,9 +62,9 @@ public class ShoppingListTest {
 
     @Test
     public void shouldChangeProductAmountInTheShoppingList() {
-        manageShoppingListSteps.givenUserIdentifier("test");
+        manageShoppingListSteps.givenUserIdentifier(TEST_USER_LOGIN);
 
-        manageShoppingListSteps.whenCreateShoppingListElementWithName("test");
+        manageShoppingListSteps.whenCreateShoppingListElementWithName(productName);
         manageShoppingListSteps.whenChangeProductAmountInTheShoppingListElement(5);
         manageShoppingListSteps.whenGetCurrentShoppingList();
 

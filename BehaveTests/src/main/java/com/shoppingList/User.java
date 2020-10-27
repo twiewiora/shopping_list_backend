@@ -9,12 +9,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShoppingItem {
+public class User {
 
     private Long id;
-    private String name;
-    private Integer amount;
-    private Boolean bought;
-    private Long userId;
+    private String login;
+    private String notificationId;
 
 }

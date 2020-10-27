@@ -1,3 +1,5 @@
+from random import getrandbits
+
 from sqlalchemy.orm import relationship
 
 from shopping.main import db
@@ -27,7 +29,7 @@ class ShoppingItem(db.Model):
             'name': self.name,
             'amount': self.amount,
             'bought': self.bought,
-            'user_id': self.user_id
+            'userId': self.user_id
         }
 
 
@@ -81,12 +83,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     login = db.Column(db.String())
     password = db.Column(db.String())
+    notification_id = db.Column(db.String())
     items = relationship('ShoppingItem', backref='user')
     shopping_list = []
 
-    def __init__(self, login, password):
+    def __init__(self, login):
         self.login = login
-        self.password = password
+        self.notification_id = getrandbits(128)
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
@@ -94,5 +97,6 @@ class User(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'login': self.login
+            'login': self.login,
+            'notificationId': self.notification_id
         }

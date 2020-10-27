@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 public class Config {
 
     public final static String API = "https://shopping-list-maker.herokuapp.com";
+    public final static String TEST_USER_LOGIN = "test";
 
 }
