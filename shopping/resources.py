@@ -95,3 +95,9 @@ class UserData(Resource):
                 return {'desc': 'User was not found'}, 404
         except Exception as e:
             return str(e)
+
+
+class WakeUp(Resource):
+    @staticmethod
+    def get():
+        return {}
