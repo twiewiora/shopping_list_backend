@@ -1,6 +1,7 @@
 package com.example.bank.shoppingList;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
+import net.thucydides.core.annotations.Narrative;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.junit.runner.RunWith;
 import static com.shoppingList.Config.TEST_USER_LOGIN;
 
 @RunWith(SerenityRunner.class)
+@Narrative(title = "Tytuł", text = "aslkdjalksmdlkas")
 public class ShoppingListTest {
 
     @Steps

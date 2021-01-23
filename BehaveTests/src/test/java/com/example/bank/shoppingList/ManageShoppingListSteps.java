@@ -93,7 +93,7 @@ public class ManageShoppingListSteps {
         given()
             .contentType(ContentType.JSON)
             .pathParam("itemId", this.shoppingItem.getId())
-            .put(API + "/item/{itemId}/changeBuyStatus")
+            .put(API + "/item/{itemId}/change-buy-status")
             .then()
             .statusCode(201);
     }
@@ -111,7 +111,7 @@ public class ManageShoppingListSteps {
             .contentType(ContentType.JSON)
             .body(jsonRequest)
             .pathParam("itemId", this.shoppingItem.getId())
-            .put(API + "/item/{itemId}/changeAmount")
+            .put(API + "/item/{itemId}/change-amount")
             .then()
             .statusCode(201);
     }
