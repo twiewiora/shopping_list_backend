@@ -71,6 +71,18 @@ class ItemChangeBuyStatus(Resource):
             return str(e)
 
 
+class Clear(Resource):
+    @staticmethod
+    def delete(user_id):
+        try:
+            items = ShoppingItem.query.filter(ShoppingItem.user_id == user_id)
+            [db.session.delete(item) for item in items]
+            db.session.commit()
+            return {'result': 'deleted'}, 204
+        except Exception as e:
+            return str(e)
+
+
 class CategoryList(Resource):
     @staticmethod
     def get():

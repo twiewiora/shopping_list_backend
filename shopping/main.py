@@ -20,13 +20,14 @@ parser.add_argument('userId')
 parser.add_argument('login')
 
 from shopping.resources import ItemList, ItemCreate, Item, ItemChangeAmount, ItemChangeBuyStatus, CategoryList, \
-    UserData, WakeUp
+    Clear, UserData, WakeUp
 
 api.add_resource(ItemList, '/items/<user_id>')
 api.add_resource(ItemCreate, '/item')
 api.add_resource(Item, '/item/<item_id>')
 api.add_resource(ItemChangeAmount, '/item/<item_id>/change-amount')
 api.add_resource(ItemChangeBuyStatus, '/item/<item_id>/change-buy-status')
+api.add_resource(Clear, '/items/<user_id>/clear')
 api.add_resource(CategoryList, '/category/all')
 api.add_resource(UserData, '/user/<login>')
 api.add_resource(WakeUp, '/wake-up')
